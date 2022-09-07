@@ -405,7 +405,7 @@ export default {
 
             for (let i = 0; i < this.roles.length; i++) {
                 if (this.addRole_roleName.toLowerCase() == this.roles[i]["rolename"].toLowerCase()) {
-                    if (this.addRole_roleName.toLowerCase() == this.modifyRole_roleName.toLowerCase()) {
+                    if (this.addRole_roleName.toLowerCase() != this.modifyRole_roleName.toLowerCase()) {
                         iziToast.error({
                             iconUrl: "/assets/error.png",
                             title: "Add Role Error",
