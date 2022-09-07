@@ -20483,9 +20483,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 6:
                 content = _context.sent;
+                console.log(content[0]);
 
-                if (!(_this.content[0].length > 0 && _this.content[1].length > 0)) {
-                  _context.next = 15;
+                if (!(content[0].length > 0 && content[1].length > 0)) {
+                  _context.next = 16;
                   break;
                 }
 
@@ -20495,28 +20496,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 console.log(_this.roles);
                 return _context.abrupt("return", true);
 
-              case 15:
+              case 16:
                 _this.users = content[0];
                 _this.roles = content[1];
                 console.log(_this.users);
                 console.log(_this.roles);
                 return _context.abrupt("return", true);
 
-              case 20:
-                _context.next = 25;
+              case 21:
+                _context.next = 26;
                 break;
 
-              case 22:
-                _context.prev = 22;
+              case 23:
+                _context.prev = 23;
                 _context.t0 = _context["catch"](0);
                 return _context.abrupt("return", false);
 
-              case 25:
+              case 26:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 22]]);
+        }, _callee, null, [[0, 23]]);
       }))();
     },
     register: function register() {

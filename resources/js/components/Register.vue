@@ -66,8 +66,9 @@ export default {
                     },
                 });
                 const content = await rawResponse.json();
+                console.log(content[0]);
 
-                if (this.content[0].length > 0 && this.content[1].length > 0) {
+                if (content[0].length > 0 && content[1].length > 0) {
                     this.users = content[0];
                     this.roles = content[1];
                     console.log(this.users);
@@ -240,11 +241,11 @@ export default {
 
             //     }
             // }
-        },
+        }
     },
     mounted() {
         this.getData();
-    },
+    }
 };
 
 //Jquery
