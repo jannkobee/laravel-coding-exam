@@ -33,7 +33,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-dark text-white">
                     <h5 class="modal-title" id="staticBackdropLabel">Modify Role</h5>
-                    <button ref="Close" type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    <button ref="Close1" type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -61,7 +61,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-dark text-white">
                     <h5 class="modal-title" id="staticBackdropLabel">Add User</h5>
-                    <button ref="Close" type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    <button ref="Close2" type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -105,7 +105,7 @@
             <div class="modal-content">
                 <div class="modal-header bg-dark text-white">
                     <h5 class="modal-title" id="staticBackdropLabel">Modify User</h5>
-                    <button ref="Close" type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    <button ref="Close3" type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -230,7 +230,9 @@ export default {
             addUser_Password: "",
             addUser_Cpassword: "",
             addUser_Role: "",
-
+            modifyRole_roleName: "",
+            modifyUser_Name: "",
+            modifyUser_Email: "",
         };
     },
     methods: {
@@ -334,7 +336,7 @@ export default {
 
         async addRole() {
             for (let i = 0; i < this.roles.length; i++) {
-                if (this.addRole_roleName == this.roles[i]["rolename"]) {
+                if (this.addRole_roleName.toLowerCase() == this.roles[i]["rolename"].toLowerCase()) {
                     iziToast.error({
                         iconUrl: "/assets/error.png",
                         title: "Add Role Error",
@@ -373,6 +375,7 @@ export default {
                 this.addRole_roleName = "";
                 this.addRole_roleDesc = "";
                 this.getAllData();
+                this.$refs.Close.click();
             }
         },
 
@@ -380,6 +383,7 @@ export default {
             this.addRole_roleId = id;
             this.addRole_roleName = name;
             this.addRole_roleDesc = description;
+            this.modifyRole_roleName = name;
         },
 
         unassignRole() {
@@ -397,6 +401,20 @@ export default {
                     position: "topRight",
                 });
                 return false;
+            }
+
+            for (let i = 0; i < this.roles.length; i++) {
+                if (this.addRole_roleName.toLowerCase() == this.roles[i]["rolename"].toLowerCase()) {
+                    if (this.addRole_roleName.toLowerCase() == this.modifyRole_roleName.toLowerCase()) {
+                        iziToast.error({
+                            iconUrl: "/assets/error.png",
+                            title: "Add Role Error",
+                            message: "Role Name is already taken.",
+                            position: "topRight",
+                        });
+                        return false;
+                    }
+                }
             }
 
             const data = { id: this.addRole_roleId, name: this.addRole_roleName, description: this.addRole_roleDesc };
@@ -417,7 +435,7 @@ export default {
                 this.addRole_roleName = "";
                 this.addRole_roleDesc = "";
                 this.getAllData();
-                this.$refs.Close.click();
+                this.$refs.Close1.click();
             }
         },
 
@@ -517,7 +535,7 @@ export default {
                 return false;
             }
             for (let i = 0; i < this.users.length; i++) {
-                if (this.addUser_Name == this.users[i]["name"]) {
+                if (this.addUser_Name.toLowerCase() == this.users[i]["name"].toLowerCase()) {
                     iziToast.error({
                         iconUrl: "/assets/error.png",
                         title: "Add User Error",
@@ -526,7 +544,7 @@ export default {
                     });
                     return false;
                 }
-                if (this.addUser_Email == this.users[i]["email"]) {
+                if (this.addUser_Email.toLowerCase() == this.users[i]["email"].toLowerCase()) {
                     iziToast.error({
                         iconUrl: "/assets/error.png",
                         title: "Add User Error",
@@ -559,6 +577,7 @@ export default {
                     this.addUser_Cpassword = "";
                     this.addUser_Role = "";
                     this.getAllData();
+                    this.$refs.Close2.click();
                 }
             } catch (error) {
                 iziToast.error({
@@ -574,6 +593,8 @@ export default {
             this.addUser_Id = id;
             this.addUser_Name = name;
             this.addUser_Email = email;
+            this.modifyUser_Name = name;
+            this.modifyUser_Email = email;
             for (let i = 0; i < this.roles.length; i++) {
                 if (this.roles[i]['rolename'] == role) {
                     this.addUser_Role = this.roles[i]['id'];
@@ -599,6 +620,32 @@ export default {
                 return false;
             }
 
+            for (let i = 0; i < this.users.length; i++) {
+                if (this.addUser_Name.toLowerCase() == this.users[i]["name"].toLowerCase()) {
+                    if (this.addUser_Name.toLowerCase() != this.modifyUser_Name.toLowerCase()) {
+                        iziToast.error({
+                            iconUrl: "/assets/error.png",
+                            title: "Modify User Error",
+                            message: "Name is already taken.",
+                            position: "topRight",
+                        });
+                        return false;
+                    }
+                }
+
+                if (this.addUser_Email.toLowerCase() == this.users[i]["email"].toLowerCase()) {
+                    if (this.addUser_Email.toLowerCase() != this.modifyUser_Email.toLowerCase()) {
+                        iziToast.error({
+                            iconUrl: "/assets/error.png",
+                            title: "Modify User Error",
+                            message: "Email is already taken.",
+                            position: "topRight",
+                        });
+                        return false;
+                    }
+                }
+            }
+
             const data = { id: this.addUser_Id, name: this.addUser_Name, email: this.addUser_Email, role: this.addUser_Role };
             const url = "/dashboard/updateUser";
 
@@ -618,7 +665,7 @@ export default {
                 this.addUser_Email = "";
                 this.addUser_Role = "";
                 this.getAllData();
-                this.$refs.Close.click();
+                this.$refs.Close3.click();
             }
         },
 

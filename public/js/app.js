@@ -19506,7 +19506,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       addUser_Email: "",
       addUser_Password: "",
       addUser_Cpassword: "",
-      addUser_Role: ""
+      addUser_Role: "",
+      modifyRole_roleName: "",
+      modifyUser_Name: "",
+      modifyUser_Email: ""
     };
   },
   methods: {
@@ -19738,7 +19741,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                if (!(_this4.addRole_roleName == _this4.roles[i]["rolename"])) {
+                if (!(_this4.addRole_roleName.toLowerCase() == _this4.roles[i]["rolename"].toLowerCase())) {
                   _context6.next = 5;
                   break;
                 }
@@ -19796,6 +19799,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this4.addRole_roleDesc = "";
 
                   _this4.getAllData();
+
+                  _this4.$refs.Close.click();
                 }
 
               case 17:
@@ -19810,6 +19815,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.addRole_roleId = id;
       this.addRole_roleName = name;
       this.addRole_roleDesc = description;
+      this.modifyRole_roleName = name;
     },
     unassignRole: function unassignRole() {
       this.addRole_roleid = "";
@@ -19820,7 +19826,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
-        var data, url, content;
+        var i, data, url, content;
         return _regeneratorRuntime().wrap(function _callee7$(_context7) {
           while (1) {
             switch (_context7.prev = _context7.next) {
@@ -19839,16 +19845,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context7.abrupt("return", false);
 
               case 3:
+                i = 0;
+
+              case 4:
+                if (!(i < _this5.roles.length)) {
+                  _context7.next = 12;
+                  break;
+                }
+
+                if (!(_this5.addRole_roleName.toLowerCase() == _this5.roles[i]["rolename"].toLowerCase())) {
+                  _context7.next = 9;
+                  break;
+                }
+
+                if (!(_this5.addRole_roleName.toLowerCase() == _this5.modifyRole_roleName.toLowerCase())) {
+                  _context7.next = 9;
+                  break;
+                }
+
+                izitoast__WEBPACK_IMPORTED_MODULE_0___default().error({
+                  iconUrl: "/assets/error.png",
+                  title: "Add Role Error",
+                  message: "Role Name is already taken.",
+                  position: "topRight"
+                });
+                return _context7.abrupt("return", false);
+
+              case 9:
+                i++;
+                _context7.next = 4;
+                break;
+
+              case 12:
                 data = {
                   id: _this5.addRole_roleId,
                   name: _this5.addRole_roleName,
                   description: _this5.addRole_roleDesc
                 };
                 url = "/dashboard/updateRole";
-                _context7.next = 7;
+                _context7.next = 16;
                 return _this5.postRequest(data, url);
 
-              case 7:
+              case 16:
                 content = _context7.sent;
 
                 if (content == 1) {
@@ -19866,10 +19904,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                   _this5.getAllData();
 
-                  _this5.$refs.Close.click();
+                  _this5.$refs.Close1.click();
                 }
 
-              case 9:
+              case 18:
               case "end":
                 return _context7.stop();
             }
@@ -20025,7 +20063,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                if (!(_this8.addUser_Name == _this8.users[i]["name"])) {
+                if (!(_this8.addUser_Name.toLowerCase() == _this8.users[i]["name"].toLowerCase())) {
                   _context9.next = 17;
                   break;
                 }
@@ -20039,7 +20077,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context9.abrupt("return", false);
 
               case 17:
-                if (!(_this8.addUser_Email == _this8.users[i]["email"])) {
+                if (!(_this8.addUser_Email.toLowerCase() == _this8.users[i]["email"].toLowerCase())) {
                   _context9.next = 20;
                   break;
                 }
@@ -20091,6 +20129,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this8.addUser_Role = "";
 
                   _this8.getAllData();
+
+                  _this8.$refs.Close2.click();
                 }
 
                 _context9.next = 35;
@@ -20118,6 +20158,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.addUser_Id = id;
       this.addUser_Name = name;
       this.addUser_Email = email;
+      this.modifyUser_Name = name;
+      this.modifyUser_Email = email;
 
       for (var i = 0; i < this.roles.length; i++) {
         if (this.roles[i]['rolename'] == role) {
@@ -20135,7 +20177,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this9 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee10() {
-        var data, url, content;
+        var i, data, url, content;
         return _regeneratorRuntime().wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
@@ -20154,6 +20196,57 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context10.abrupt("return", false);
 
               case 3:
+                i = 0;
+
+              case 4:
+                if (!(i < _this9.users.length)) {
+                  _context10.next = 16;
+                  break;
+                }
+
+                if (!(_this9.addUser_Name.toLowerCase() == _this9.users[i]["name"].toLowerCase())) {
+                  _context10.next = 9;
+                  break;
+                }
+
+                if (!(_this9.addUser_Name.toLowerCase() != _this9.modifyUser_Name.toLowerCase())) {
+                  _context10.next = 9;
+                  break;
+                }
+
+                izitoast__WEBPACK_IMPORTED_MODULE_0___default().error({
+                  iconUrl: "/assets/error.png",
+                  title: "Modify User Error",
+                  message: "Name is already taken.",
+                  position: "topRight"
+                });
+                return _context10.abrupt("return", false);
+
+              case 9:
+                if (!(_this9.addUser_Email.toLowerCase() == _this9.users[i]["email"].toLowerCase())) {
+                  _context10.next = 13;
+                  break;
+                }
+
+                if (!(_this9.addUser_Email.toLowerCase() != _this9.modifyUser_Email.toLowerCase())) {
+                  _context10.next = 13;
+                  break;
+                }
+
+                izitoast__WEBPACK_IMPORTED_MODULE_0___default().error({
+                  iconUrl: "/assets/error.png",
+                  title: "Modify User Error",
+                  message: "Email is already taken.",
+                  position: "topRight"
+                });
+                return _context10.abrupt("return", false);
+
+              case 13:
+                i++;
+                _context10.next = 4;
+                break;
+
+              case 16:
                 data = {
                   id: _this9.addUser_Id,
                   name: _this9.addUser_Name,
@@ -20161,10 +20254,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   role: _this9.addUser_Role
                 };
                 url = "/dashboard/updateUser";
-                _context10.next = 7;
+                _context10.next = 20;
                 return _this9.postRequest(data, url);
 
-              case 7:
+              case 20:
                 content = _context10.sent;
 
                 if (content == 1) {
@@ -20183,10 +20276,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                   _this9.getAllData();
 
-                  _this9.$refs.Close.click();
+                  _this9.$refs.Close3.click();
                 }
 
-              case 9:
+              case 22:
               case "end":
                 return _context10.stop();
             }
@@ -20354,12 +20447,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context.abrupt("return", false);
 
               case 6:
-                _context.prev = 6;
+                if (!(_this.password.length < 8)) {
+                  _context.next = 9;
+                  break;
+                }
+
+                izitoast__WEBPACK_IMPORTED_MODULE_0___default().error({
+                  iconUrl: "/assets/error.png",
+                  title: "Login Error",
+                  message: "Password must be 8 letters or more.",
+                  position: "topRight"
+                });
+                return _context.abrupt("return", false);
+
+              case 9:
+                _context.prev = 9;
                 data = {
                   email: _this.email,
                   password: _this.password
                 };
-                _context.next = 10;
+                _context.next = 13;
                 return fetch("/login/log", {
                   method: "POST",
                   headers: {
@@ -20370,12 +20477,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   body: JSON.stringify(data)
                 });
 
-              case 10:
+              case 13:
                 rawResponse = _context.sent;
-                _context.next = 13;
+                _context.next = 16;
                 return rawResponse.json();
 
-              case 13:
+              case 16:
                 content = _context.sent;
 
                 if (content == 1) {
@@ -20390,12 +20497,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, 5000);
                 }
 
-                _context.next = 20;
+                _context.next = 23;
                 break;
 
-              case 17:
-                _context.prev = 17;
-                _context.t0 = _context["catch"](6);
+              case 20:
+                _context.prev = 20;
+                _context.t0 = _context["catch"](9);
                 izitoast__WEBPACK_IMPORTED_MODULE_0___default().error({
                   iconUrl: "/assets/error.png",
                   title: "Login Error",
@@ -20403,12 +20510,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   position: "topRight"
                 });
 
-              case 20:
+              case 23:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[6, 17]]);
+        }, _callee, null, [[9, 20]]);
       }))();
     }
   },
@@ -20446,6 +20553,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      getRoleToast: false,
       name: "",
       email: "",
       password: "",
@@ -20486,7 +20594,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 console.log(content[0]);
 
                 if (!(content[0].length > 0 && content[1].length > 0)) {
-                  _context.next = 16;
+                  _context.next = 17;
                   break;
                 }
 
@@ -20494,30 +20602,68 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.roles = content[1];
                 console.log(_this.users);
                 console.log(_this.roles);
+
+                if (_this.getRoleToast == false) {
+                  izitoast__WEBPACK_IMPORTED_MODULE_0___default().success({
+                    iconUrl: "/assets/error.png",
+                    title: "Success",
+                    message: "GET Roles Success",
+                    position: "bottomLeft"
+                  });
+                  _this.getRoleToast = true;
+                }
+
                 return _context.abrupt("return", true);
 
-              case 16:
+              case 17:
                 _this.users = content[0];
                 _this.roles = content[1];
                 console.log(_this.users);
                 console.log(_this.roles);
+
+                if (_this.getRoleToast == false) {
+                  izitoast__WEBPACK_IMPORTED_MODULE_0___default().success({
+                    iconUrl: "/assets/error.png",
+                    title: "Success",
+                    message: "GET Roles Success",
+                    position: "bottomLeft"
+                  });
+                  _this.getRoleToast = true;
+                }
+
                 return _context.abrupt("return", true);
 
-              case 21:
-                _context.next = 26;
+              case 23:
+                _context.next = 34;
                 break;
 
-              case 23:
-                _context.prev = 23;
+              case 25:
+                _context.prev = 25;
                 _context.t0 = _context["catch"](0);
+
+                if (!(_this.getRoleToast == false)) {
+                  _context.next = 33;
+                  break;
+                }
+
+                izitoast__WEBPACK_IMPORTED_MODULE_0___default().error({
+                  iconUrl: "/assets/error.png",
+                  title: "Error",
+                  message: "GET Roles Error. Please check your Database Connection",
+                  position: "topRight"
+                });
+                _this.getRoleToast = true;
                 return _context.abrupt("return", false);
 
-              case 26:
+              case 33:
+                return _context.abrupt("return", false);
+
+              case 34:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 23]]);
+        }, _callee, null, [[0, 25]]);
       }))();
     },
     register: function register() {
@@ -20543,7 +20689,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                     iconUrl: "/assets/error.png",
                     title: "Register Error",
                     message: "There seems to be a problem. Please check your Database Connection",
-                    position: "bottomLeft"
+                    position: "topRight"
                   });
                 }
 
@@ -20629,7 +20775,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   break;
                 }
 
-                if (!(_this3.name == _this3.users[i]["name"])) {
+                if (!(_this3.name.toLowerCase() == _this3.users[i]["name"].toLowerCase())) {
                   _context3.next = 17;
                   break;
                 }
@@ -20643,7 +20789,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 return _context3.abrupt("return", false);
 
               case 17:
-                if (!(_this3.email == _this3.users[i]["email"])) {
+                if (!(_this3.email.toLowerCase() == _this3.users[i]["email"].toLowerCase())) {
                   _context3.next = 20;
                   break;
                 }
@@ -20875,7 +21021,7 @@ var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_19 = {
-  ref: "Close",
+  ref: "Close1",
   type: "button",
   "class": "btn-close btn-close-white",
   "data-bs-dismiss": "modal",
@@ -20945,7 +21091,7 @@ var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_32 = {
-  ref: "Close",
+  ref: "Close2",
   type: "button",
   "class": "btn-close btn-close-white",
   "data-bs-dismiss": "modal",
@@ -21049,7 +21195,7 @@ var _hoisted_51 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_52 = {
-  ref: "Close",
+  ref: "Close3",
   type: "button",
   "class": "btn-close btn-close-white",
   "data-bs-dismiss": "modal",

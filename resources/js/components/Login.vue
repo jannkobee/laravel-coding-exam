@@ -49,6 +49,15 @@ export default {
                 });
                 return false;
             }
+            if (this.password.length < 8) {
+                iziToast.error({
+                    iconUrl: "/assets/error.png",
+                    title: "Login Error",
+                    message: "Password must be 8 letters or more.",
+                    position: "topRight",
+                });
+                return false;
+            }
             try {
                 const data = { email: this.email, password: this.password };
                 const rawResponse = await fetch("/login/log", {

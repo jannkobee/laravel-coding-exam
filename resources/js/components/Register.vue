@@ -43,6 +43,7 @@ import "izitoast/dist/css/iziToast.min.css";
 export default {
     data() {
         return {
+            getRoleToast: false,
             name: "",
             email: "",
             password: "",
@@ -73,16 +74,46 @@ export default {
                     this.roles = content[1];
                     console.log(this.users);
                     console.log(this.roles);
+                    if (this.getRoleToast == false) {
+                        iziToast.success({
+                            iconUrl: "/assets/error.png",
+                            title: "Success",
+                            message: "GET Roles Success",
+                            position: "bottomLeft",
+                        });
+                        this.getRoleToast = true;
+                    }
                     return true;
                 } else {
                     this.users = content[0];
                     this.roles = content[1];
                     console.log(this.users);
                     console.log(this.roles);
+                    if (this.getRoleToast == false) {
+                        iziToast.success({
+                            iconUrl: "/assets/error.png",
+                            title: "Success",
+                            message: "GET Roles Success",
+                            position: "bottomLeft",
+                        });
+                        this.getRoleToast = true;
+                    }
                     return true;
+
                 }
             } catch (error) {
-                return false;
+                if (this.getRoleToast == false) {
+                    iziToast.error({
+                        iconUrl: "/assets/error.png",
+                        title: "Error",
+                        message: "GET Roles Error. Please check your Database Connection",
+                        position: "topRight",
+                    });
+                    this.getRoleToast = true;
+                    return false;
+                } else {
+                    return false;
+                }
             }
         },
 
@@ -96,7 +127,7 @@ export default {
                     iconUrl: "/assets/error.png",
                     title: "Register Error",
                     message: "There seems to be a problem. Please check your Database Connection",
-                    position: "bottomLeft",
+                    position: "topRight",
                 });
             }
         },
@@ -145,7 +176,7 @@ export default {
                 return false;
             }
             for (let i = 0; i < this.users.length; i++) {
-                if (this.name == this.users[i]["name"]) {
+                if (this.name.toLowerCase() == this.users[i]["name"].toLowerCase()) {
                     iziToast.error({
                         iconUrl: "/assets/error.png",
                         title: "Register Error",
@@ -154,7 +185,7 @@ export default {
                     });
                     return false;
                 }
-                if (this.email == this.users[i]["email"]) {
+                if (this.email.toLowerCase() == this.users[i]["email"].toLowerCase()) {
                     iziToast.error({
                         iconUrl: "/assets/error.png",
                         title: "Register Error",
