@@ -295,7 +295,6 @@ export default {
                 const url = "/dashboard/getData";
 
                 const content = await this.getRequest(url);
-
                 if (content.length > 0) {
                     this.name = content[0]["name"];
                     this.id = content[0]["id"];
@@ -361,6 +360,7 @@ export default {
             const url = "/dashboard/storeRole";
 
             const content = await this.postRequest(data, url);
+            console.log(content)
 
             if (content == 1) {
                 console.log(content);

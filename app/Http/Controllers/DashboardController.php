@@ -7,189 +7,66 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Session;
 use App\Models\User;
+use App\Repositories\DashboardRepository;
 use Hash;
 use Throwable;
 
 class DashboardController extends Controller
 {
+    private $dashboardRepository;
+
+    public function __construct(DashboardRepository $dashboardRepository)
+    {
+        $this->dashboardRepository = $dashboardRepository;
+    }
+
     public function index()
     {
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-
-        $data = Auth::user();
-
-        return view('dashboard');
+        return $this->dashboardRepository->index();
     }
 
     public function getData()
     {
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-
-        $data = Auth::user();
-
-        $id = $data->id;
-
-        $return = DB::table('users as use')
-            ->where('use.id', '=', $id)
-            ->join('roles as rol', 'use.role', '=', 'rol.id')
-            ->select('use.id', 'use.name', 'use.email', 'use.role', 'rol.rolename', 'rol.description')
-            ->get();
-
-        return $return;
+        return $this->dashboardRepository->getData();
     }
 
     public function getAllData()
     {
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-
-        $users = DB::table('users as use')
-            ->join('roles as rol', 'use.role', '=', 'rol.id')
-            ->select('use.id', 'use.name', 'use.email', 'rol.rolename')
-            ->get();
-
-        $roles = DB::table('roles')->get();
-
-        return [$users, $roles];
+        return $this->dashboardRepository->getAllData();
     }
 
     public function storeRole(Request $request)
     {
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-
-        try {
-            DB::beginTransaction();
-            $return = DB::table('roles')->insert([
-                'rolename' => $request->name,
-                'description' => $request->description,
-                'created_at' =>  \Carbon\Carbon::now(),
-                'updated_at' =>  \Carbon\Carbon::now(),
-            ]);
-            DB::commit();
-            return $return;
-        } catch (\Throwable $th) {
-            DB::rollBack();
-        }
+        return $this->dashboardRepository->storeRole($request);
     }
 
     public function storeUser(Request $request)
     {
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-
-        $request->validate([
-            'name' => 'required|unique:users',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
-            'cpassword' => 'required|min:8',
-            'role' => 'required|min:1',
-        ]);
-
-        $data = $request->all();
-
-        $return = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'role' => $data['role']
-        ]);
-
-        return $return;
+        return $this->dashboardRepository->storeUser($request);
     }
 
     public function updateRole(Request $request)
     {
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-
-        try {
-            DB::beginTransaction();
-            $return = DB::table('roles')
-                ->where('id', $request->id)
-                ->update(
-                    [
-                        'rolename' => $request->name,
-                        'description' => $request->description,
-                        'updated_at' => \Carbon\Carbon::now()
-                    ]
-                );
-            DB::commit();
-            return $return;
-        } catch (\Throwable $th) {
-            DB::rollBack();
-        }
+        return $this->dashboardRepository->updateRole($request);
     }
 
     public function updateUser(Request $request)
     {
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-
-        try {
-            DB::beginTransaction();
-            $return = DB::table('users')
-                ->where('id', $request->id)
-                ->update(
-                    [
-                        'name' => $request->name,
-                        'email' => $request->email,
-                        'role' => $request->role,
-                        'updated_at' => \Carbon\Carbon::now()
-                    ]
-                );
-            DB::commit();
-            return $return;
-        } catch (\Throwable $th) {
-            DB::rollBack();
-        }
+        return $this->dashboardRepository->updateUser($request);
     }
 
     public function deleteRole(Request $request)
     {
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-        try {
-            DB::beginTransaction();
-            $return = DB::table('roles')->where('id', $request->id)->delete();
-            DB::commit();
-            return $return;
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            return $th;
-        }
+        return $this->dashboardRepository->deleteRole($request);
     }
 
     public function deleteUser(Request $request)
     {
-        if (!Auth::check()) {
-            return redirect('/login');
-        }
-        try {
-            DB::beginTransaction();
-            $return = DB::table('users')->where('id', $request->id)->delete();
-            DB::commit();
-            return $return;
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            return $th;
-        }
+        return $this->dashboardRepository->deleteUser($request);
     }
 
     public function logout()
     {
-        Session::flush();
-        Auth::logout();
-        return redirect('/login');
+        return $this->dashboardRepository->logout();
     }
 }

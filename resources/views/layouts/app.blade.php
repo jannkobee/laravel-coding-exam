@@ -36,4 +36,7 @@
     <script src="{{ mix('js/app.js') }}"></script>
 </body>
 
+    @yield('scripts')
+
+
 </html>

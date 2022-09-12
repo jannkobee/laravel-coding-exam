@@ -42,3 +42,6 @@ Route::prefix('dashboard')->group(function () {
     Route::post('/deleteUser', 'App\Http\Controllers\DashboardController@deleteUser');
     Route::get('/logout', 'App\Http\Controllers\DashboardController@logout');
 });
+
+Route::get('/sampledata', 'App\Http\Controllers\UserController@index');
+Route::get('/sampledata1', 'App\Http\Controllers\UserController@getdata');
