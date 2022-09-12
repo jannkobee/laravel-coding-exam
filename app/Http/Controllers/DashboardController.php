@@ -3,14 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Session;
-use App\Models\User;
 use App\Repositories\DashboardRepository;
-use Hash;
-use Throwable;
-
 class DashboardController extends Controller
 {
     private $dashboardRepository;
